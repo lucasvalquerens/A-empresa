@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>A EMPRESA | Loja de Roupas</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0} body{font-family:Arial,sans-serif;background:#0b0b0b;color:#fff} a{color:inherit}
+header{position:sticky;top:0;z-index:10;background:#0b0b0bf2;border-bottom:1px solid #292929;padding:18px 6%;display:flex;justify-content:space-between;align-items:center;backdrop-filter:blur(8px)}.logo{font-size:24px;font-weight:900;letter-spacing:3px}nav a{text-decoration:none;margin-left:22px;font-size:14px}
+.hero{min-height:72vh;padding:80px 6%;display:flex;align-items:center;background:radial-gradient(circle at 80% 25%,#333,#111 42%,#080808 75%)}.hero div{max-width:720px}.tag{font-size:13px;letter-spacing:5px;color:#aaa;margin-bottom:18px}h1{font-size:clamp(48px,9vw,94px);line-height:.9;letter-spacing:-4px;margin-bottom:25px}.hero p{font-size:19px;color:#c9c9c9;line-height:1.6;margin-bottom:30px}
+.btn{border:0;cursor:pointer;text-decoration:none;display:inline-block;padding:14px 22px;border-radius:5px;font-weight:800;background:#fff;color:#111}section{padding:70px 6%}h2{font-size:36px;margin-bottom:30px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.card{background:#151515;border:1px solid #292929;border-radius:10px;overflow:hidden}.card img{width:100%;height:350px;object-fit:cover;display:block}.info{padding:18px}.info h3{font-size:18px;margin-bottom:8px}.info p{color:#aaa;font-size:14px;line-height:1.4;min-height:40px}.price{font-size:20px;font-weight:800;margin:15px 0}.buy{width:100%}.about{background:#f0f0f0;color:#111;text-align:center}.about p{max-width:700px;margin:auto;line-height:1.7;color:#444}.contact{text-align:center}.contact p{color:#aaa;margin:12px 0 24px}footer{padding:25px 6%;border-top:1px solid #292929;text-align:center;color:#777;font-size:13px}.float{position:fixed;right:18px;bottom:18px;border-radius:30px;padding:14px 18px;background:#fff;color:#111;text-decoration:none;font-weight:800;z-index:20}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){nav{display:none}section{padding:50px 5%}.hero{padding:60px 5%}h1{letter-spacing:-2px}.grid{gap:10px}.card img{height:245px}.info{padding:13px}.info h3{font-size:16px}}
+</style>
+</head>
+<body>
+<header><div class="logo">A EMPRESA</div><nav><a href="#inicio">Início</a><a href="#colecao">Coleção</a><a href="#sobre">Sobre</a><a href="#contato">Contato</a></nav></header>
+<section class="hero" id="inicio"><div><div class="tag">A EMPRESA • ESTILO URBANO</div><h1>THE WORLD<br>IS YOURS.</h1><p>Peças com identidade, presença e atitude.</p><a class="btn" href="#colecao">VER COLEÇÃO</a></div></section>
+<section id="colecao"><h2>Nova coleção</h2><div class="grid" id="products"></div></section>
+<section class="about" id="sobre"><h2>A EMPRESA</h2><p>Uma marca feita para quem quer vestir personalidade. Escolha sua peça e finalize o pagamento com segurança.</p></section>
+<section class="contact" id="contato"><h2>Fale com a gente</h2><p>WhatsApp: (21) 97593-1121</p><a class="btn" href="https://wa.me/5521975931121" target="_blank">CHAMAR NO WHATSAPP</a></section>
+<a class="float" href="https://wa.me/5521975931121" target="_blank">WhatsApp</a>
+<footer>© 2026 A EMPRESA — Todos os direitos reservados.</footer>
+<script>
+const products = [{"id": "moletom-preto", "name": "Moletom A EMPRESA", "desc": "Moletom preto com identidade A EMPRESA.", "price": 95.0, "image": "produto1.jpeg"}, {"id": "moletom-verde", "name": "Moletom Forest", "desc": "Moletom verde floresta com identidade discreta.", "price": 95.0, "image": "produto2.jpeg"}, {"id": "camiseta-world", "name": "Camiseta The World Is Yours", "desc": "Camiseta preta com mensagem marcante.", "price": 60.0, "image": "produto3.jpeg"}, {"id": "camiseta-frente-verso", "name": "Camiseta World Is Yours — Frente e Verso", "desc": "Camiseta com arte frontal e nas costas.", "price": 65.0, "image": "produto4.jpeg"}];
+const root = document.getElementById('products');
+products.forEach(p => {
+  const card = document.createElement('article');
+  card.className='card';
+  card.innerHTML = `<img src="images/${p.image}" alt="${p.name}"><div class="info"><h3>${p.name}</h3><p>${p.desc}</p><div class="price">R$ ${p.price.toFixed(2).replace('.',',')}</div><button class="btn buy" onclick="buy('${p.id}')">COMPRAR</button></div>`;
+  root.appendChild(card);
+});
+async function buy(id) {
+  const btns=[...document.querySelectorAll('.buy')]; btns.forEach(b=>b.disabled=true);
+  try {
+    const r=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({productId:id})});
+    const data=await r.json();
+    if(!r.ok) throw new Error(data.error||'Não foi possível criar o checkout.');
+    window.location.href=data.url;
+  } catch(e) {
+    alert(e.message + '\n\nSe o site ainda não foi publicado com o servidor da InfinitePay, o checkout precisa ser configurado na hospedagem.');
+    btns.forEach(b=>b.disabled=false);
+  }
+}
+</script>
+</body></html>
