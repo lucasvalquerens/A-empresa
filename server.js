@@ -8,9 +8,9 @@ const HANDLE = process.env.INFINITEPAY_HANDLE || "lucas-reis-dos-santos06";
 const PUBLIC_URL = process.env.PUBLIC_URL || "";
 
 const products = {
-  "moletom-preto": { name: "Moletom A EMPRESA", price: 9500 },
+  "moletom-preto": { name: "Moletom A EMPRESA", price: 60000 },
   "moletom-verde": { name: "Moletom Forest", price: 9500 },
-  "camiseta-world": { name: "Camiseta The World Is Yours", price: 6000 },
+  "camiseta-world": { name: "Camiseta The World Is Yours", price: 9500 },
   "camiseta-frente-verso": { name: "Camiseta World Is Yours — Frente e Verso", price: 6500 }
 };
 
