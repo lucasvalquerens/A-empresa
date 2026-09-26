@@ -1,7 +1,7 @@
 A EMPRESA — SITE + CHECKOUT INFINITEPAY
 
 Produtos:
-1. Moletom preto — R$ 95,00
+1. Moletom preto — R$600,00
 2. Moletom verde — R$ 95,00
 3. Camiseta The World Is Yours — R$ 60,00
 4. Camiseta frente/verso — R$ 65,00
